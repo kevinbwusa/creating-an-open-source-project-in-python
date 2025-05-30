@@ -2,5 +2,5 @@
 node_modules
 .tmp
 npm-debug.log
-*/__pycache__/*
+__pycache__/*
 .tox/*
