@@ -1,3 +1,7 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.poetry]
 name = "reminder"
 version = "0.1.0"
@@ -16,6 +20,29 @@ flake8 = "^5.0.4"
 pre-commit = "^2.20.0"
 tox = "^3.25.1"
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.tox]
+legacy_tox_ini = true
+
+[tox]
+envlist = ["py39", "py311", "py312", "testenv", "lint", "format", "check", "coverage"]
+
+[testenv]
+deps = [
+    "pytest",
+    "flake8",
+    "black",
+    "pre-commit",
+]
+commands_pre = [
+    "flake8 reminder tests",
+    "black --check reminder tests",
+    "pre-commit run --all-files",
+]
+commands = [
+    "pytest",
+]
+commands_post = [
+    "flake8 reminder tests",
+    "black --check reminder tests",
+    "pre-commit run --all-files",
+]
