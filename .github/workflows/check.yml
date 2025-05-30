@@ -24,7 +24,11 @@ jobs:
           python -m pip install tox
           tox -e py${{ matrix.python-version }}
 
-      - name: Upload coverage reports to Codecov
+      - name: Upload coverage reports to CodeCov (parallel)
         uses: codecov/codecov-action@v5
         with:
+          files: ./coverage.xml
+          flags: unittests
+          name: codecov-coverage-parallel
           token: ${{ secrets.CODECOV_TOKEN }}
+          
