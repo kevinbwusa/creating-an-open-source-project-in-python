@@ -4,4 +4,3 @@ node_modules
 npm-debug.log
 */__pycache__/*
 .tox/*
-__pycache__/*
