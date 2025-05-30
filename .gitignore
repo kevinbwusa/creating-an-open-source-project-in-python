@@ -2,10 +2,6 @@
 node_modules
 .tmp
 npm-debug.log
-before/__pycache__/reminder.cpython-39.pyc
-before/__pycache__/reminder.cpython-311.pyc
-before/__pycache__/reminder.cpython-312.pyc
-before/__pycache__/tests.cpython-39-pytest-8.3.5.pyc
-before/__pycache__/tests.cpython-311-pytest-8.3.5.pyc
-before/__pycache__/tests.cpython-312-pytest-8.3.5.pyc
-before/.tox/dist/reminder-0.1.0.tar.gz
+*/__pycache__/
+*/__pycache__/
+.tox/
