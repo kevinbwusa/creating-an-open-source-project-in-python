@@ -54,9 +54,9 @@ def _find_match(target: str, task_list: List[Task]):
             potential_match.append((score, task.name))
     if potential_match:
         potential_match = sorted(potential_match, key=lambda x: x[0], reverse=True)
-        click.echo(f"Cannot find {target}, here are the close matches:")
+        click.echo(f"Cannot find {target}, here are the close matches.")
         for num, match in enumerate(potential_match):
-            click.echo(f"{num+1}. {match[1]}")
+            click.echo(f"{num + 1}. {match[1]}")
 
 
 @click.group()
@@ -87,11 +87,11 @@ def list():
     task_list = _get_task_list()
     for num, task in enumerate(task_list):
         if task.done:
-            click.secho(f"{num+1}. {task.name}", fg="green")
+            click.secho(f"{num + 1}. {task.name}", fg="green")
         elif _overdue(task.deadline):
-            click.secho(f"{num+1}. {task.name}", fg="red")
+            click.secho(f"{num + 1}. {task.name}", fg="red")
         else:
-            click.echo(f"{num+1}. {task.name}")
+            click.echo(f"{num + 1}. {task.name}")
 
 
 @click.command()

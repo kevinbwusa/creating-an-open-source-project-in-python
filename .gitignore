@@ -10,3 +10,9 @@ before/__pycache__/tests.cpython-311-pytest-8.3.5.pyc
 before/__pycache__/tests.cpython-312-pytest-8.3.5.pyc
 before/.tox/dist/reminder-0.1.0.tar.gz
 .tox/.package.lock
+after/__pycache__/reminder.cpython-39.pyc
+after/__pycache__/reminder.cpython-312.pyc
+after/__pycache__/tests.cpython-39-pytest-8.3.5.pyc
+after/__pycache__/tests.cpython-312-pytest-8.3.5.pyc
+after/.tox/dist/reminder-0.1.0.tar.gz
+after/.tox/.package.lock
