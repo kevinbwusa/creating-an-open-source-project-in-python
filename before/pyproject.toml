@@ -1,3 +1,7 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.poetry]
 name = "reminder"
 version = "0.1.0"
@@ -16,6 +20,99 @@ flake8 = "^5.0.4"
 pre-commit = "^2.20.0"
 tox = "^3.25.1"
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.tox]
+legacy_tox_ini = true
+
+[tox]
+envlist = ["py38", "py39", "py310", "py311", "py312", "testenv", "lint", "format", "check", "coverage"]
+usedevelop = true
+skip_missing_interpreters = true
+[testenv:py38]
+basepython = "python3.8"
+[testenv:py39]
+basepython = "python3.9"
+[testenv:py310]
+basepython = "python3.10" 
+[testenv:py311]
+basepython = "python3.11"
+[testenv:py312]
+basepython = "python3.12"
+# Tox configuration for Python project
+# This file is used to define the testing environments and commands for the project.
+# It includes environments for different Python versions, as well as commands for linting, formatting, and testing.
+# Each environment can be run independently using Tox.
+# The environments are defined for Python 3.8, 3.9, 3.11, and 3.12.
+# The test environment runs all tests and checks code quality.
+# The lint environment runs linters to check code style.
+
+[testenv]
+deps = [
+    "pytest",
+    "flake8",
+    "black",
+    "pre-commit",
+]
+commands_pre = [
+    "flake8 reminder tests",
+    "black --check reminder tests",
+    "pre-commit run --all-files",
+]
+commands = [
+    "pytest",
+]
+commands_post = [
+    "flake8 reminder tests",
+    "black --check reminder tests",
+    "pre-commit run --all-files",
+]
+
+[testenv:lint]
+description = "Run linters"
+skip_install = true
+deps = [
+    "flake8",
+    "black",
+    "pre-commit",
+]
+commands = [
+    "flake8 reminder tests",
+    "black --check reminder tests",
+    "pre-commit run --all-files",
+]
+
+[testenv:format]
+description = "Format code"
+skip_install = true
+deps = [
+    "black",
+    "pre-commit",
+]
+commands = [
+    "black reminder tests",
+    "pre-commit run --all-files",
+]
+
+[testenv:check]
+description = "Check code quality"
+skip_install = true
+deps = [
+    "flake8",
+    "black",
+    "pre-commit",
+]
+commands = [
+    "flake8 reminder tests",
+    "black --check reminder tests",
+    "pre-commit run --all-files",
+]
+
+[testenv:coverage]
+description = "Run tests with coverage"
+skip_install = true
+deps = [
+    "pytest",
+    "pytest-cov",
+]
+commands = [
+    "pytest --cov=reminder --cov-report=html --cov-report=term",
+]
