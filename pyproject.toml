@@ -9,15 +9,15 @@ license = "MIT"
 reminder = "reminder.cli:main" # Entry point for the command line interface 
 
 [tool.poetry.dependencies]
-python = ">=3.9.22"
+python = ">=3.8.18"
 click = "^8.1.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.5"
-black = "^25.1.0"
-flake8 = "^7.2.0"
-pre-commit = "^4.2.0"
-tox = "^4.26.0"
+black = "^23.9.1"
+flake8 = "^6.1.0"
+pre-commit = "^3.2.0"
+tox = "^4.6.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
