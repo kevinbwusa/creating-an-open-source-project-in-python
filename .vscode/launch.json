@@ -1,0 +1,18 @@
+// This file is used to configure the debugger for a Python project in Visual Studio Code.
+{
+  "version": "0.1.0",
+  "configurations": [
+      {
+          "name": "Debug Reminder Module",
+          "type": "debugpy",
+          "request": "launch",
+          "cwd": "${workspaceFolder}",
+          "module": "reminder",
+          "args": [],
+          "justMyCode": false,
+          "env": {
+              "MY_ENV_VAR": "value"
+          }
+      }
+  ]
+}
