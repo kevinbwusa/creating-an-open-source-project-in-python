@@ -10,7 +10,7 @@ reminder = "reminder.cli:main" # Entry point for the command line interface
 
 [tool.poetry.dependencies]
 python = ">=3.10"
-click = "^8.2.1"
+click = "^8.1.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.5"
