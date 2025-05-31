@@ -9,7 +9,7 @@ license = "MIT"
 reminder = "reminder.cli:main" # Entry point for the command line interface 
 
 [tool.poetry.dependencies]
-python = ">=3.10"
+python = ">=3.9.22"
 click = "^8.1.1"
 
 [tool.poetry.group.dev.dependencies]
