@@ -1,9 +1,56 @@
 repos:
--   repo: https://github.com/psf/black
-    rev: 22.6.0
+  - repo: local
     hooks:
-    -   id: black
--   repo: https://github.com/PyCQA/flake8
-    rev: 5.0.4
+      - id: isort
+        name: isort
+        entry: poetry run isort .
+        language: system
+        pass_filenames: false
+        args: ["--profile", "black"]
+        stages:
+          - pre-commit
+  - repo: local
     hooks:
-    -   id: flake8
+      - id: black
+        name: Black
+        entry: poetry run black .
+        language: system
+        pass_filenames: false
+        stages:
+          - pre-commit
+  - repo: local
+    hooks:
+      - id: pylint
+        name: Pylint
+        entry: poetry run pylint src
+        language: system
+        pass_filenames: false
+        stages:
+          - pre-commit
+  - repo: local
+    hooks:
+      - id: bandit
+        name: Bandit
+        entry: poetry run bandit -r src -c pyproject.toml
+        language: system
+        pass_filenames: false
+        stages:
+          - pre-commit
+  - repo: local
+    hooks:
+      - id: mypy
+        name: MyPy
+        entry: poetry run mypy . --ignore-missing-imports --follow-imports=skip
+        language: system
+        pass_filenames: false
+        stages:
+          - pre-commit
+  - repo: local
+    hooks:
+      - id: commitizen
+        name: Commitizen
+        entry: poetry run cz check --commit-msg-file
+        language: system
+        stages:
+          - commit-msg
+        require_serial: true

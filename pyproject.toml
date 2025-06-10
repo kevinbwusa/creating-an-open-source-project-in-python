@@ -1,24 +1,82 @@
 [tool.poetry]
 name = "reminder"
 version = "0.1.0"
-description = "This is my 1st Python project"
-authors = ["Cheukting <cheukting.ho@gmail.com>"]
-license = "MIT"
+description = ""
+authors = ["Kevin Whittington <kevinbw@comcast.net>"]
+package-mode = false
 
-[tool.poetry.scripts]
-reminder = "reminder.cli:main" # Entry point for the command line interface 
+[[tool.poetry.source]]
+name = "PyPI"
+priority = "primary"
 
 [tool.poetry.dependencies]
-python = ">=3.8.18"
-click = "^8.1.1"
+python = "^3.12"
+fastapi = "^0.115.2"
+uvicorn = "^0.29"
+httpx = "^0.26"
+prometheus-fastapi-instrumentator = "^7.0"
+psycopg2-binary = "^2.9.9"
+geoalchemy2 = "^0.15.1"
+alembic = "^1.13.2"
+rule-engine = "^4.5.0"
+pytest-mock = "^3.14.0"
+pyjwt = "^2.10.1"
+cryptography = "^45.0.3"
+bandit = "^1.8.3"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.3.5"
-black = "^23.9.1"
-flake8 = "^6.1.0"
-pre-commit = "^3.2.0"
-tox = "^4.6.1"
+bandit = ">=1"
+black = ">=23"
+commitizen = ">=2"
+coverage = ">=7"
+isort = ">=5"
+mypy = ">=1"
+pre-commit = ">=3"
+pylint = ">=3"
+pytest = ">=7"
+requests = "^2.32.3"
+pytest-asyncio = "^0.24.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+exclude = ['models', 'tests']
+
+[tool.pylint]
+ignore = ["tests", "models", "apis"]
+disable = "missing-module-docstring,missing-class-docstring,missing-function-docstring"
+
+[tool.pylint.format]
+max-line-length = "88"
+
+[tool.bandit]
+exclude_dirs = ["tests", "models"]
+
+[tool.commitizen]
+version = "3.1.2"
+name = "cz_conventional_commits"
+version_files = [
+    "pyproject.toml:version"
+]
+style = [
+    ["qmark", "fg:#ff9d00 bold"],
+    ["question", "bold"],
+    ["answer", "fg:#ff9d00 bold"],
+    ["pointer", "fg:#ff9d00 bold"],
+    ["highlighted", "fg:#ff9d00 bold"],
+    ["selected", "fg:#cc5454"],
+    ["separator", "fg:#cc5454"],
+    ["instruction", ""],
+    ["text", ""],
+    ["disabled", "fg:#858585 italic"]
+]
+version_provider = "poetry"
+
+[tool.pytest.ini_options]
+asyncio_mode="auto"
+asyncio_default_fixture_loop_scope="function"

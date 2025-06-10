@@ -7,7 +7,7 @@
           "type": "debugpy",
           "request": "launch",
           "cwd": "${workspaceFolder}",
-          "module": "reminder",
+          "module": "src/reminder",
           "args": [],
           "justMyCode": false,
           "env": {
