@@ -4,3 +4,7 @@ node_modules
 npm-debug.log
 __pycache__/*
 .tox/*
+src/main/__pycache__/
+src/tests/__pycache__/
+src/test/__pycache__/__init__.cpython-312.pyc
+src/test/__pycache__/test_reminder.cpython-312-pytest-8.4.0.pyc
