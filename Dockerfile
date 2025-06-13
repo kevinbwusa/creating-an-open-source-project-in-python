@@ -30,7 +30,7 @@ COPY pyproject.toml poetry.lock* /app/
 
 # Install dependencies
 RUN poetry config virtualenvs.create false \
-    && poetry install --no-interaction --no-ansi --only fastapi
+    && poetry install --no-interaction --no-ansi --only main
 
 ENV PATH="/root/.local/bin:$PATH"
 
