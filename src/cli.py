@@ -26,7 +26,7 @@ def runserver():
 def add(title: str, deadline: str):
     """Add a task in reminders."""
     task_list = app.get_task_list()
-    target = app.find_task(title, task_list)
+    target = app.find_task_by_title(title)
     if target is not None:
         click.echo(f"'{title}' already in the list.")
         return
@@ -55,11 +55,11 @@ def list_tasks():
 def remove(task: str):
     """Remove a task in reminders."""
     task_list = app.get_task_list()
-    target = app.find_task(task, task_list)
+    target = app.find_task_by_title(task)
     if target is not None:
         task_list.remove(target)
     else:
-        app.find_match(task, task_list)
+        app.find_match(task)
     app.save_task_list(task_list)
 
 
@@ -68,11 +68,11 @@ def remove(task: str):
 def completed(task: str):
     """Mark a task as completed in reminders."""
     task_list = app.get_task_list()
-    target = app.find_task(task, task_list)
+    target = app.find_task_by_title(task)
     if target is not None:
         target.completed = True
     else:
-        app.find_match(task, task_list)
+        app.find_match(task)
     app.save_task_list(task_list)
 
 

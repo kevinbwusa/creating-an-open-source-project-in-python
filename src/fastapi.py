@@ -4,32 +4,35 @@ from typing import List
 from uuid import UUID, uuid4
 
 from fastapi import FastAPI, HTTPException
-from src.reminder import Task, tasks
+from src import reminder
+from src.reminder import Task, get_task_list
 
 app = FastAPI()
+
+# task_list: List[Task] = list[Task]()
 
 
 # FastAPI routes definitions for CRUD operations
 @app.get("/tasks/", response_model=List[Task])
 def read_tasks():
     """REST/API to return the list of tasks."""
-    return tasks
+    return get_task_list()
 
 
 @app.post("/tasks/", response_model=Task)
 def create_task(task: Task):
     """REST/API to create a new task and add it to the list of tasks."""
-    task.id = uuid4()
-    tasks.append(task)
+    task.task_id = uuid4()
+    reminder.add_task(task)
     return task
 
 
 @app.get("/tasks/{task_id}", response_model=Task)
 def read_task(task_id: UUID):
     """REST/API to return a specific task from the list of tasks."""
-    for task in tasks:
-        if task.id == task_id:
-            return task
+    found = reminder.get_task_by_key(task_id)
+    if found:
+        return found
 
     raise HTTPException(status_code=404, detail="Task not found")
 
@@ -37,12 +40,25 @@ def read_task(task_id: UUID):
 @app.put("/tasks/{task_id}", response_model=Task)
 def update_task(task_id: UUID, task_update: Task):
     """REST/API to update a specific task found the list of tasks."""
-    for idx, task in enumerate(tasks):
-        if task.id == task_id:
+    task_list = get_task_list()
+    # Find the task by its ID and update it
+    if not task_list:
+        raise HTTPException(status_code=404, detail="Task not found")
+    if not task_update:
+        raise HTTPException(status_code=400, detail="No update data provided")
+    if task_id is None:
+        raise HTTPException(status_code=400, detail="Task ID is required")
+    if task_update.task_id is not None and task_update.task_id != task_id:
+        raise HTTPException(
+            status_code=400,
+            detail="Task ID in the body does not match the URL parameter",
+        )
+    for idx, task in enumerate(task_list):
+        if task.task_id == task_id:
             updated_task = task.model_copy(
                 update=task_update.model_dump(exclude_unset=True)
             )
-            tasks[idx] = updated_task
+            task_list[idx] = updated_task
             return updated_task
 
     raise HTTPException(status_code=404, detail="Task not found")
@@ -51,11 +67,10 @@ def update_task(task_id: UUID, task_update: Task):
 @app.delete("/tasks/{task_id}", response_model=Task)
 def delete_task(task_id: UUID):
     """REST/API to remove a specific task from the list of tasks."""
-    for idx, task in enumerate(tasks):
-        if task.id == task_id:
-            return tasks.pop(idx)
-
-    raise HTTPException(status_code=404, detail="Task not found")
+    try:
+        reminder.delete_task(task_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail="Task not found") from exc
 
 
 if __name__ == "__main__":

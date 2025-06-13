@@ -23,10 +23,10 @@ RUN curl -sSL https://install.python-poetry.org | python3.12 && \
     ln -s /root/.local/bin/poetry /usr/local/bin/poetry
 
 # Set working directory
-WORKDIR /app
+WORKDIR /code
 
 # Copy project files (update as needed)
-COPY pyproject.toml poetry.lock* /app/
+COPY pyproject.toml poetry.lock* /code/
 
 # Install dependencies
 RUN poetry config virtualenvs.create false \
@@ -35,8 +35,9 @@ RUN poetry config virtualenvs.create false \
 ENV PATH="/root/.local/bin:$PATH"
 
 # Copy rest of the app
-COPY . /app
+COPY src /code/src
 
 EXPOSE 8080
 
 ENTRYPOINT ["poetry", "run", "uvicorn", "fastapi:app", "--app-dir", "src/main", "--host", "0.0.0.0", "--port", "8080"]
+# ENTRYPOINT ["sh", "-c", "sleep 2703600"]
