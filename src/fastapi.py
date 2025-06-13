@@ -4,8 +4,7 @@ from typing import List
 from uuid import UUID, uuid4
 
 from fastapi import FastAPI, HTTPException
-
-from src.main.reminder import Task, tasks
+from src.reminder import Task, tasks
 
 app = FastAPI()
 

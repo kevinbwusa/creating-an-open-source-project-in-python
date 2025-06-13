@@ -1,7 +1,7 @@
 import click
 
-import src.main.reminder as app
-from src.main.reminder import Task
+import src.reminder as app
+from src.reminder import Task
 
 # import uvicorn
 # from src.main import fastapi

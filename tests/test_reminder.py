@@ -2,8 +2,8 @@ import datetime as dt
 
 import pytest
 
-import src.main.reminder as app
-from src.main.reminder import Task
+import src.reminder as app
+from src.reminder import Task
 
 
 @pytest.fixture(name="task_list")
