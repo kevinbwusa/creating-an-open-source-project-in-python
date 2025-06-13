@@ -1,12 +1,12 @@
 import datetime as dt
-
-# import pickle
 import json
 from dataclasses import dataclass
 from difflib import SequenceMatcher as SM
 from typing import List, Optional
 
 import click
+
+TASK_FILE = "reminder.json"
 
 
 @dataclass
@@ -15,18 +15,36 @@ class Task:
     deadline: Optional[dt.date] = None
     done: bool = False
 
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "deadline": self.deadline.isoformat() if self.deadline else None,
+            "done": self.done,
+        }
+
+    @staticmethod
+    def from_dict(data):
+        return Task(
+            name=data["name"],
+            deadline=(
+                dt.date.fromisoformat(data["deadline"]) if data["deadline"] else None
+            ),
+            done=data["done"],
+        )
+
 
 def _get_task_list() -> List[Task]:
     try:
-        with open("reminder.p", "rb") as f:
-            return json.load(f)
-    except (FileNotFoundError, EOFError):
+        with open(TASK_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            return [Task.from_dict(item) for item in data]
+    except (FileNotFoundError, json.JSONDecodeError):
         return []
 
 
 def _save_task_list(task_list: List[Task]) -> None:
-    with open("reminder.p", "w", encoding="utf-8") as f:
-        json.dump([task.__dict__ for task in task_list], f)
+    with open(TASK_FILE, "w", encoding="utf-8") as f:
+        json.dump([task.to_dict() for task in task_list], f, indent=4)
 
 
 def _overdue(deadline: Optional[dt.date]) -> bool:
