@@ -1,10 +1,10 @@
+"""Command-line interface"""
+
 import click
 
-import src.reminder as app
-from src.reminder import Task
-
-# import uvicorn
-# from src.main import fastapi
+# Now you can import modules from the current directory
+import fastapi_server.models.task as app
+from fastapi_server.models.task import Task
 
 
 @click.group()
@@ -28,6 +28,7 @@ def add(title: str, deadline: str):
     task_list = app.get_task_list()
     target = app.find_task_by_title(title)
     if target is not None:
+
         click.echo(f"'{title}' already in the list.")
         return
     if deadline is None:
@@ -77,6 +78,7 @@ def completed(task: str):
 
 
 def add_cli(cli_app):
+    """Add the list of commands to the command-line parser"""
     cli_app.add_command(add)
     cli_app.add_command(list_tasks)
     cli_app.add_command(remove)

@@ -1,3 +1,5 @@
+"""Implement logging for the module"""
+
 import logging
 import logging.config
 import os

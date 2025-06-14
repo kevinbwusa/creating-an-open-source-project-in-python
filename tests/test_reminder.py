@@ -2,8 +2,8 @@ import datetime as dt
 
 import pytest
 
-import src.reminder as app
-from src.reminder import Task
+import src.fastapi_server.models.task as app
+from src.fastapi_server.models.task import Task
 
 
 @pytest.fixture(autouse=True)

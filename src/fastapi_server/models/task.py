@@ -1,3 +1,5 @@
+"""Implement the Task Model"""
+
 import datetime as dt
 import json
 from difflib import SequenceMatcher as SM
@@ -9,7 +11,6 @@ from pydantic import BaseModel
 TASK_FILE = "reminder.json"
 
 
-# @dataclass
 class Task(BaseModel):
     """Defines the shape of a task model"""
 
@@ -44,6 +45,7 @@ class Task(BaseModel):
         return hash(self.task_id)
 
     def to_dict(self):
+        """Provide customized access to this object as a dictionary"""
         return {
             "title": self.title,
             "deadline": self.deadline.isoformat() if self.deadline else None,
@@ -52,6 +54,7 @@ class Task(BaseModel):
 
     @staticmethod
     def from_dict(data):
+        """Provide convertions from dictionary to task object"""
         task = Task(
             task_id=UUID(data["key"]) if "key" in data else uuid4(),
             title=data.get("title"),
