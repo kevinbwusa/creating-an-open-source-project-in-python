@@ -5,7 +5,7 @@ from uuid import UUID, uuid4
 
 from fastapi import APIRouter, HTTPException
 
-from fastapi_server.models.task import Task, add_task, get_task_by_key, get_task_list
+from models.task import Task, add_task, get_task_by_key, get_task_list
 
 DEFAULT_ENDPOINT_TAGS = ["TASK"]
 

@@ -2,8 +2,8 @@ import datetime as dt
 
 import pytest
 
-import src.fastapi_server.models.task as app
-from src.fastapi_server.models.task import Task
+import src.models.task as app
+from src.models.task import Task
 
 
 @pytest.fixture(autouse=True)

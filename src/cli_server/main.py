@@ -3,8 +3,8 @@
 import click
 
 # Now you can import modules from the current directory
-import fastapi_server.models.task as app
-from fastapi_server.models.task import Task
+import models.task as app
+from models.task import Task
 
 
 @click.group()
