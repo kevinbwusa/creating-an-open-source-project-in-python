@@ -35,9 +35,9 @@ RUN poetry config virtualenvs.create false \
 ENV PATH="/root/.local/bin:$PATH"
 
 # Copy rest of the app
-COPY src /code/src
+COPY . /code/
 
 EXPOSE 8080
 
-ENTRYPOINT ["poetry", "run", "uvicorn", "fastapi:app", "--app-dir", "src/main", "--host", "0.0.0.0", "--port", "8080"]
+ENTRYPOINT ["poetry", "run", "uvicorn", "fastapi_server.main:app", "--app-dir", "src/main", "--host", "0.0.0.0", "--port", "8080"]
 # ENTRYPOINT ["sh", "-c", "sleep 2703600"]
