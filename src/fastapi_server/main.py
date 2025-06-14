@@ -29,15 +29,17 @@ async def lifespan(this_app: FastAPI):
     yield
 
 
-app = FastAPI(
-    title="Kevin's Utilities",
-    description="API for handling utility operations",
-    version="1.0.0",
-    docs_url=None,
-    redoc_url=None,
-    openapi_url=f"{API_PREFIX}/openapi.json",
-    lifespan=lifespan,
-)
+app = FastAPI()
+
+# app = FastAPI(
+#     title="Kevin's Utilities",
+#     description="API for handling utility operations",
+#     version="1.0.0",
+#     docs_url=None,
+#     redoc_url=None,
+#     openapi_url=f"{API_PREFIX}/openapi.json",
+#     lifespan=lifespan,
+# )
 
 parent_dir_path = os.path.dirname(os.path.realpath(__file__))
 app.mount(
