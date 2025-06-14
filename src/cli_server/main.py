@@ -5,8 +5,10 @@ import sys
 
 import click
 
-# Now you can import modules from the current directory
+# Import or define the app object
 import models.task as app
+
+# Now you can import modules from the current directory
 from models.task import Task
 
 home = os.environ["HOME"]
