@@ -1,7 +1,6 @@
 """Module providing a demonstration of the FastAPI."""
 
 import os
-import sys
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -16,13 +15,6 @@ from prometheus_fastapi_instrumentator import Instrumentator
 
 from fastapi_server.apis.task_api import router as TaskApiRouter
 from fastapi_server.configuration import CORS_ALLOW_ORIGIN, logger
-
-home = os.environ["HOME"]
-print(f"Home directory is {home}", file=sys.stderr)
-
-# Add the parent directory to sys.path to ensure 'reminder' can be imported
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 
 API_CONTEXT_ROOT = os.environ.get("API_CONTEXT_ROOT", "/api")
 API_VERSION = os.environ.get("API_VERSION", "v1")
