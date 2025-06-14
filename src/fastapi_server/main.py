@@ -17,8 +17,6 @@ from prometheus_fastapi_instrumentator import Instrumentator
 from fastapi_server.apis.task_api import router as TaskApiRouter
 from fastapi_server.configuration import CORS_ALLOW_ORIGIN, logger
 
-# from fastapi_server.models.task_api import Task, get_task_list
-
 home = os.environ["HOME"]
 print(f"Home directory is {home}", file=sys.stderr)
 

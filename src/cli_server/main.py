@@ -1,10 +1,19 @@
 """Command-line interface"""
 
+import os
+import sys
+
 import click
 
 # Now you can import modules from the current directory
 import models.task as app
 from models.task import Task
+
+home = os.environ["HOME"]
+print(f"Home directory is {home}", file=sys.stderr)
+
+# Add the parent directory to sys.path to ensure 'reminder' can be imported
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 @click.group()
