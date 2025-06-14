@@ -13,7 +13,9 @@ home = os.environ["HOME"]
 print(f"Home directory is {home}", file=sys.stderr)
 
 # Add the parent directory to sys.path to ensure 'reminder' can be imported
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+top_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(f"Top directory is {top_dir}", file=sys.stderr)
+sys.path.append(top_dir)
 
 
 @click.group()
