@@ -2,8 +2,8 @@
 
 import click
 
-import models.task as app
-from models.task import Task
+import models.task_model as app
+from models.task_model import Task
 
 # home = os.environ["HOME"]
 # print(f"Home directory is {home}", file=sys.stderr)

@@ -15,7 +15,7 @@ class Task(BaseModel):
     """Defines the shape of a task model"""
 
     title: str = ""
-    task_id: Optional[UUID] = uuid4()
+    task_id: UUID = uuid4()
     deadline: Optional[dt.date] = None
     description: Optional[str] = None
     completed: bool = False
@@ -47,6 +47,7 @@ class Task(BaseModel):
     def to_dict(self):
         """Provide customized access to this object as a dictionary"""
         return {
+            "task_id": str(self.task_id),
             "title": self.title,
             "deadline": self.deadline.isoformat() if self.deadline else None,
             "completed": self.completed,
@@ -56,7 +57,7 @@ class Task(BaseModel):
     def from_dict(data):
         """Provide convertions from dictionary to task object"""
         task = Task(
-            task_id=UUID(data["key"]) if "key" in data else uuid4(),
+            task_id=UUID(data["task_id"]) if "task_id" in data else uuid4(),
             title=data.get("title"),
             description=data.get("description"),
             deadline=(
@@ -84,10 +85,10 @@ def get_task_list() -> List[Task]:
         return []
 
 
-def get_task_by_key(key: UUID) -> Optional[Task]:
-    """Returns the task with the given key, or None if not found."""
+def get_task_by_task_id(task_id: UUID) -> Optional[Task]:
+    """Returns the task with the given task id, or None if not found."""
     for task in get_task_list():
-        if task.task_id == key:
+        if task.task_id == task_id:
             return task
     return None
 
@@ -95,7 +96,8 @@ def get_task_by_key(key: UUID) -> Optional[Task]:
 def save_task_list(new_task_list: List[Task]) -> None:
     """Saves the list of tasks to the JSON file."""
     with open(TASK_FILE, "w", encoding="utf-8") as f:
-        json.dump([task.to_dict() for task in new_task_list], f, indent=4)
+        new_task_dict = [task.to_dict() for task in new_task_list]
+        json.dump(new_task_dict, f, indent=4)
 
 
 def overdue(deadline: Optional[dt.date]) -> bool:

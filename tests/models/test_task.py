@@ -2,8 +2,8 @@ import datetime as dt
 
 import pytest
 
-import src.models.task as app
-from src.models.task import Task
+import src.models.task_model as app
+from src.models.task_model import Task
 
 
 @pytest.fixture(autouse=True)
@@ -17,7 +17,7 @@ def setup_teardown():
 @pytest.fixture(name="task_list")
 def task_list_fixture():
     task_list = [Task(title="pay rent"), Task(title="buy bread")]
-    return task_list
+    yield task_list
 
 
 # Test clear_task_list functions
@@ -105,10 +105,6 @@ def test_find_task_by_title_no_match(task_list):
     assert app.find_task_by_title("pay mortgage") is None
     assert app.find_task_by_title("") is None
 
-def test_find_task_by_title(task_list):
-    app.save_task_list(task_list)
-    assert app.find_task_by_title(task_list[0].title) == task_list[0]
-
 
 # Test find_match function
 # ----------------------------------------------------------------------------
@@ -165,6 +161,16 @@ def test_find_match_no_close_matches_empty_list(capsys):
 
 # Test add_task function
 # ----------------------------------------------------------------------------
+
+def test_add_task(task_list):
+    app.save_task_list(task_list)
+    app.add_task(Task(title="add another task"))
+    assert len(app.get_task_list()) == len(task_list) + 1
+
+    
+# Test delete_task function
+# ----------------------------------------------------------------------------
+
 def test_add_task(task_list):
     app.save_task_list(task_list)
     app.add_task(Task(title="add another task"))

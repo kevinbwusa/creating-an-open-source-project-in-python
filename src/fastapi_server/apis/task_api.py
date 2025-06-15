@@ -5,7 +5,7 @@ from uuid import UUID, uuid4
 
 from fastapi import APIRouter, HTTPException
 
-from models.task import Task, add_task, get_task_by_key, get_task_list
+from models.task_model import Task, add_task, get_task_by_task_id, get_task_list
 
 DEFAULT_ENDPOINT_TAGS = ["TASK"]
 
@@ -30,7 +30,7 @@ def create_task(task: Task):
 @router.get("/tasks/{task_id}", response_model=Task)
 def read_task(task_id: UUID):
     """REST/API to return a specific task from the list of tasks."""
-    found = get_task_by_key(task_id)
+    found = get_task_by_task_id(task_id)
     if found:
         return found
 
