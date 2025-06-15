@@ -20,7 +20,18 @@ def task_list_fixture():
     return task_list
 
 
-# Test _save_task_list and _get_task_list functions
+# Test clear_task_list functions
+# ----------------------------------------------------------------------------
+
+def test_clear_task_list(task_list):
+    app.save_task_list(task_list)
+    load_list = app.get_task_list()
+    assert len(load_list) == len(task_list)
+    app.clear_task_list()
+    load_list = app.get_task_list()
+    assert len(load_list) == 0
+
+# Test get_task_list and save_task_list functions
 # ----------------------------------------------------------------------------
 
 
@@ -35,7 +46,7 @@ def test_get_task_list_empty():
     assert app.get_task_list() == []
 
 
-# Test _overdue function
+# Test overdue function
 # ----------------------------------------------------------------------------
 
 
@@ -49,7 +60,7 @@ def test_overdue_with_date():
     assert app.overdue(dt.date(3000, 1, 1)) is False
 
 
-# Test _todate function
+# Test todate function
 # ----------------------------------------------------------------------------
 
 
@@ -57,7 +68,7 @@ def test_to_date():
     assert app.to_date("2022-09-01") == dt.date(2022, 9, 1)
 
 
-# Test _to_date exception handling
+# Test to_date exception handling
 def test_to_date_invalid_format():
     with pytest.raises(ValueError, match="not in YYYY-MM-DD format."):
         app.to_date("2022/09/01")
@@ -68,7 +79,7 @@ def test_to_date_invalid_value():
         app.to_date("2022-13-01")
 
 
-# Test _find_task function
+# Test find_task_by_title function
 # ----------------------------------------------------------------------------
 @pytest.mark.parametrize(
     "test_input, expected",
@@ -78,24 +89,28 @@ def test_to_date_invalid_value():
         ("PAY RENT", Task(title="pay rent")),
     ],
 )
-def test_find_task(test_input, expected, task_list):
+def test_find_task_by_title(test_input, expected, task_list):
     app.save_task_list(task_list)
     assert app.find_task_by_title(test_input) == expected
 
 
-def test_find_task_empty_list():
+def test_find_task_by_title_empty_list():
     assert app.find_task_by_title("buy bread") is None
     assert app.find_task_by_title("pay rent") is None
     assert app.find_task_by_title("") is None
 
 
-def test_find_task_no_match(task_list):
+def test_find_task_by_title_no_match(task_list):
     app.save_task_list(task_list)
     assert app.find_task_by_title("pay mortgage") is None
     assert app.find_task_by_title("") is None
 
+def test_find_task_by_title(task_list):
+    app.save_task_list(task_list)
+    assert app.find_task_by_title(task_list[0].title) == task_list[0]
 
-# Test _find_match function
+
+# Test find_match function
 # ----------------------------------------------------------------------------
 def test_find_match(task_list, capsys):
     app.save_task_list(task_list)
@@ -146,3 +161,11 @@ def test_find_match_no_close_matches_empty_list(capsys):
     captured = capsys.readouterr()
     assert "Cannot find buy bread, here are the close matches." not in captured.out
     assert "pay rent" not in captured.out
+
+
+# Test add_task function
+# ----------------------------------------------------------------------------
+def test_add_task(task_list):
+    app.save_task_list(task_list)
+    app.add_task(Task(title="add another task"))
+    assert len(app.get_task_list()) == len(task_list) + 1

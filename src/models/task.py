@@ -67,7 +67,10 @@ class Task(BaseModel):
         return task
 
 
-# task_list: List[Task] = list[Task]()
+def clear_task_list() -> None:
+    """Clears the list of tasks."""
+    save_task_list([])
+    print("Task list cleared.")
 
 
 def get_task_list() -> List[Task]:
@@ -79,6 +82,14 @@ def get_task_list() -> List[Task]:
             return [Task.from_dict(item) for item in data]
     except (FileNotFoundError, json.JSONDecodeError):
         return []
+
+
+def get_task_by_key(key: UUID) -> Optional[Task]:
+    """Returns the task with the given key, or None if not found."""
+    for task in get_task_list():
+        if task.task_id == key:
+            return task
+    return None
 
 
 def save_task_list(new_task_list: List[Task]) -> None:
@@ -104,14 +115,6 @@ def to_date(deadline: str) -> dt.date | None:
         return dt.date.fromisoformat(deadline)
     except ValueError:
         raise ValueError(f"{deadline} is not in YYYY-MM-DD format.") from None
-
-
-def get_task_by_key(key: UUID) -> Optional[Task]:
-    """Returns the task with the given key, or None if not found."""
-    for task in get_task_list():
-        if task.task_id == key:
-            return task
-    return None
 
 
 def find_task_by_title(title: str) -> Optional[Task]:
@@ -296,9 +299,3 @@ def print_help() -> None:
     help - Prints this help message
     """
     print(help_message)
-
-
-def clear_task_list() -> None:
-    """Clears the list of tasks."""
-    save_task_list([])
-    print("Task list cleared.")
