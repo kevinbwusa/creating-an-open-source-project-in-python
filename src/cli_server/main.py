@@ -2,8 +2,8 @@
 
 import click
 
-import models.task_model as app
-from models.task_model import Task
+import src.models.task_model as app
+from src.models.task_model import Task
 
 # home = os.environ["HOME"]
 # print(f"Home directory is {home}", file=sys.stderr)
@@ -29,7 +29,7 @@ def runserver():
 
 @click.command()
 @click.option("--deadline", default=None, help="Enter date in YYYY-MM-DD format.")
-@click.argument("task")
+@click.argument("title")
 def add(title: str, deadline: str):
     """Add a task in reminders."""
     task_list = app.get_task_list()
@@ -59,28 +59,28 @@ def list_tasks():
 
 
 @click.command()
-@click.argument("task")
-def remove(task: str):
+@click.argument("title")
+def remove(title: str):
     """Remove a task in reminders."""
     task_list = app.get_task_list()
-    target = app.find_task_by_title(task)
+    target = app.find_task_by_title(title)
     if target is not None:
         task_list.remove(target)
     else:
-        app.find_match(task)
+        app.find_match(title)
     app.save_task_list(task_list)
 
 
 @click.command()
-@click.argument("task")
-def completed(task: str):
+@click.argument("title")
+def completed(title: str):
     """Mark a task as completed in reminders."""
     task_list = app.get_task_list()
-    target = app.find_task_by_title(task)
+    target = app.find_task_by_title(title)
     if target is not None:
         target.completed = True
     else:
-        app.find_match(task)
+        app.find_match(title)
     app.save_task_list(task_list)
 
 
